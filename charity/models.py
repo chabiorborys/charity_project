@@ -16,20 +16,37 @@ class Institution(models.Model):
         (LOKAL, "zbiórka lokalna")
     )
     name = models.CharField(max_length=64)
-    def sum_of_all_institutions():
-        return(Institution.objects.all().count())
     description = models.TextField()
     type = models.IntegerField(choices=FOUNDATIONS, default=FOUNDATION)
     categories = models.ManyToManyField('Category')
 
+    def sum_of_all_institutions():
+        return (Institution.objects.all().count())
 
-class Donation(models.Model):
+    def all_foundations():
+        return Institution.objects.all().filter(type=Institution.FOUNDATION)
+
+    def all_nonprofits():
+        return Institution.objects.all().filter(type=Institution.NONPROFIT)
+
+    def all_lokal():
+        return Institution.objects.all().filter(type=Institution.LOKAL)
+
+    def is_foundation(self):
+        return self.type == Institution.FOUNDATION
+
+
+
+
+class Donation(models.Model): #aggregate albo annotate, sum/count naprzemiennie
     quantity = models.IntegerField(default=0)
+
     def sum_of_all_bags():
         sum = 0
         for d in Donation.objects.all():
             sum += d.quantity
         return sum
+
     categories = models.ManyToManyField('Category')
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     address = models.TextField()
@@ -40,5 +57,3 @@ class Donation(models.Model):
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-
-

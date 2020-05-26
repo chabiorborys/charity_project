@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.name
+
 
 class Institution(models.Model):
     FOUNDATION = 0
@@ -24,21 +27,22 @@ class Institution(models.Model):
         return (Institution.objects.all().count())
 
     def all_foundations():
-        return Institution.objects.all().filter(type=Institution.FOUNDATION)
+        return Institution.objects.filter(type=Institution.FOUNDATION)
 
     def all_nonprofits():
-        return Institution.objects.all().filter(type=Institution.NONPROFIT)
+        return Institution.objects.filter(type=Institution.NONPROFIT)
 
     def all_lokal():
-        return Institution.objects.all().filter(type=Institution.LOKAL)
+        return Institution.objects.filter(type=Institution.LOKAL)
 
     def is_foundation(self):
         return self.type == Institution.FOUNDATION
 
+    def __str__(self):
+        return self.name
 
 
-
-class Donation(models.Model): #aggregate albo annotate, sum/count naprzemiennie
+class Donation(models.Model):  # aggregate albo annotate, sum/count naprzemiennie
     quantity = models.IntegerField(default=0)
 
     def sum_of_all_bags():

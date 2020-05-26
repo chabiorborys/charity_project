@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Donation, Institution
+from .models import Donation, Institution, Category
 
 class LandingPageView(View):
     def get(self, request):
@@ -19,7 +19,12 @@ class LandingPageView(View):
 
 class AddDonationView(View):
     def get(self, request):
-        return render(request, 'form.html')
+        all_institutions = Institution.objects.all()
+        all_categories = Category.objects.all()
+        context = {'all_institutions':all_institutions,
+                   'all_categories': all_categories,
+                   }
+        return render(request, 'form.html', context)
 
 class LoginView(View):
     def get(self, request):
@@ -28,6 +33,8 @@ class LoginView(View):
 class RegisterView(View):
     def get(self, request):
         return render(request, 'register.html')
+
+
 
 
 

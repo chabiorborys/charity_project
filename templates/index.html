@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block header %}
+    header--main-page
+{% endblock %}
+{% block slogan %}
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
@@ -91,7 +93,8 @@
                             <div class="subtitle">Cel i misja: {{ foundation.description }}</div>
                         </div>
                         <div class="col">
-                            <div class="text">ubrania, jedzenie, sprzęt AGD, meble, zabawki</div>
+                            <div class="text">{% for category in foundation.categories.all %}
+                                {{ category }}{% endfor %}</div>
                         </div>
                     </li>
                 {% endfor %}           ​
@@ -123,7 +126,8 @@
                         </div>
                         ​
                         <div class="col">
-                            <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                            <div class="text">{% for category in nonprofit.categories.all %}
+                                {{ category }} {% endfor %}</div>
                         </div>
                     </li>
                     ​
@@ -154,7 +158,8 @@
                         </div>
                         ​
                         <div class="col">
-                            <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                            <div class="text">{% for category in lokal.categories.all %}
+                                {{ category }}{% endfor %}</div>
                         </div>
                     </li>
                 {% endfor %}

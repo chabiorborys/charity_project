@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Donation, Institution, Category
 
+from .forms import CharityForm
+from .models import Donation, Institution, Category
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout, authenticate
 class LandingPageView(View):
     def get(self, request):
         sum_of_all_bags = Donation.sum_of_all_bags()
@@ -19,10 +23,12 @@ class LandingPageView(View):
 
 class AddDonationView(View):
     def get(self, request):
+        form = CharityForm()
         all_institutions = Institution.objects.all()
         all_categories = Category.objects.all()
         context = {'all_institutions':all_institutions,
                    'all_categories': all_categories,
+                   'form':form
                    }
         return render(request, 'form.html', context)
 
@@ -39,7 +45,6 @@ class RegisterView(View):
 
 
 
-def organization_view(request, id):
-    institutions = Institution.objects.get(id=id)
-    context = {'institution':institutions}
-    return render(request, 'index.html', context)
+
+
+

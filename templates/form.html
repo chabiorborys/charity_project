@@ -57,20 +57,21 @@
             <div class="form--steps-counter">Krok <span>1</span>/5</div>
 
             <form action="form-confirmation.html" method="post">
+            {% csrf_token %}
                 <!-- STEP 1: class .active is switching steps -->
                 <div data-step="1" class="active">
                     <h3>Zaznacz co chcesz oddać:</h3>
-                    {% for category in all_categories %}
+                    {% for key, value in form.category.field.choices %}
                         <div class="form-group form-group--checkbox">
                             <label>
                                 <input
                                         type="checkbox"
                                         name="categories"
-                                        value="clothes-to-use"
+                                        value="{{key}}"
                                 />
                                 <span class="checkbox"></span>
                                 <span class="description"
-                                >{{ category.name }}</span
+                                >{{ value }}</span
                                 >
                             </label>
                         </div>
@@ -83,7 +84,7 @@
 
                 <!-- STEP 2 -->
                 <div data-step="2">
-                    <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
+                    <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3> #how to integrate form in django template
 
                     <div class="form-group form-group--inline">
                         <label>

@@ -53,6 +53,10 @@ class LoginView(View):
         else:
             return redirect("/register")
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect("/")
 
 class RegisterView(View):
     def get(self, request):

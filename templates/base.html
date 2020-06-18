@@ -14,11 +14,30 @@
 
 <header class="{% block header %}{% endblock %}">
     <nav class="container container--70">
-        <ul class="nav--actions">
-            <li><a href="/login" class="btn btn--small btn--without-border">Zaloguj</a></li>
-            <li><a href="/register" class="btn btn--small btn--highlighted">Załóż konto</a></li>
-        </ul>
-        ​
+        {% if user.is_authenticated %}
+            <ul class="nav--actions">
+                <li class="logged-user">
+                    Witaj {{ user.first_name }}
+                    <ul class="dropdown">
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="#">Ustawienia</a></li>
+                        {% if request.user.is_superuser %}
+                            <li><a href="#">Administracja</a></li>
+                        {% endif %}
+                        <li><a href="/logout">Wyloguj</a></li>
+                    </ul>
+                </li>
+            </ul>
+        {% else %}
+            <ul class="nav--actions">
+                <li>
+                    <a href="/login" class="btn btn--small btn--without-border">Zaloguj</a>
+                </li>
+                <li>
+                    <a href="/register" class="btn btn--small btn--highlighted">Załóż konto</a>
+                </li>
+            </ul>
+        {% endif %}
         <ul>
             <li><a href="/" class="btn btn--without-border active">Start</a></li>
             <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>
@@ -28,9 +47,8 @@
             <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
     </nav>
-
-{%  block slogan %}    ​
-{% endblock %}
+    {% block slogan %}    ​
+    {% endblock %}
 </header>
 ​
 {% block content %}
